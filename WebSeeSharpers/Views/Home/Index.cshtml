@@ -1,0 +1,27 @@
+﻿@model IEnumerable<WebSeeSharpers.Models.Movie>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welkom bij SeeSharpers</h1>
+    <h2>Nu in de bioscoop</h2>
+    
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="card bg-black text-white col-3 mx-2 p-2" style="width: 16rem;">
+                <img src="@Html.DisplayFor(modelItem => item.Thumbnail)" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                    
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-black text-white">@Html.DisplayNameFor(model => model.Duration) @Html.DisplayFor(modelItem => item.Duration)</li>
+                    <li class="list-group-item bg-black text-white">@Html.DisplayNameFor(model => model.Description) @Html.DisplayFor(modelItem => item.Description)</li>
+                    <li class="list-group-item bg-black text-white">@Html.DisplayNameFor(model => model.BeginTime) @Html.DisplayFor(modelItem => item.BeginTime)</li>
+                </ul>
+            </div>
+        }
+    </div>
+</div>
