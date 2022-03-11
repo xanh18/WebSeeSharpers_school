@@ -15,7 +15,7 @@ namespace WebSeeSharpers.Data
         {
         }
 
-        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Movie> Movie { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Order> Orders { get; set; }

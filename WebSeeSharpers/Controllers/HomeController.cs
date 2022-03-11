@@ -20,7 +20,7 @@ namespace WebSeeSharpers.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Movies.ToListAsync());
+            return View(await _context.Movie.ToListAsync());
         }
 
         public IActionResult Privacy()

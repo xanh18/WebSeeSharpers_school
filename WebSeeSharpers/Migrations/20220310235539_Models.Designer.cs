@@ -12,7 +12,7 @@ using WebSeeSharpers.Data;
 namespace WebSeeSharpers.Migrations
 {
     [DbContext(typeof(WebSeeSharpersContext))]
-    [Migration("20220310234208_Models")]
+    [Migration("20220310235539_Models")]
     partial class Models
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,7 +107,7 @@ namespace WebSeeSharpers.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movie");
                 });
 
             modelBuilder.Entity("WebSeeSharpers.Models.Order", b =>

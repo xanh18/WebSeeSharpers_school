@@ -105,7 +105,7 @@ namespace WebSeeSharpers.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movie");
                 });
 
             modelBuilder.Entity("WebSeeSharpers.Models.Order", b =>

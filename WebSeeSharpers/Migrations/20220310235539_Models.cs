@@ -14,16 +14,8 @@ namespace WebSeeSharpers.Migrations
                 table: "Language");
 
             migrationBuilder.DropPrimaryKey(
-                name: "PK_Movie",
-                table: "Movie");
-
-            migrationBuilder.DropPrimaryKey(
                 name: "PK_Language",
                 table: "Language");
-
-            migrationBuilder.RenameTable(
-                name: "Movie",
-                newName: "Movies");
 
             migrationBuilder.RenameTable(
                 name: "Language",
@@ -33,11 +25,6 @@ namespace WebSeeSharpers.Migrations
                 name: "IX_Language_MovieId",
                 table: "Languages",
                 newName: "IX_Languages_MovieId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Movies",
-                table: "Movies",
-                column: "Id");
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Languages",
@@ -142,9 +129,9 @@ namespace WebSeeSharpers.Migrations
                 {
                     table.PrimaryKey("PK_Viewings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Viewings_Movies_MovieId",
+                        name: "FK_Viewings_Movie_MovieId",
                         column: x => x.MovieId,
-                        principalTable: "Movies",
+                        principalTable: "Movie",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -171,17 +158,17 @@ namespace WebSeeSharpers.Migrations
                 column: "TheatreId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Languages_Movies_MovieId",
+                name: "FK_Languages_Movie_MovieId",
                 table: "Languages",
                 column: "MovieId",
-                principalTable: "Movies",
+                principalTable: "Movie",
                 principalColumn: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Languages_Movies_MovieId",
+                name: "FK_Languages_Movie_MovieId",
                 table: "Languages");
 
             migrationBuilder.DropTable(
@@ -203,16 +190,8 @@ namespace WebSeeSharpers.Migrations
                 name: "Theatres");
 
             migrationBuilder.DropPrimaryKey(
-                name: "PK_Movies",
-                table: "Movies");
-
-            migrationBuilder.DropPrimaryKey(
                 name: "PK_Languages",
                 table: "Languages");
-
-            migrationBuilder.RenameTable(
-                name: "Movies",
-                newName: "Movie");
 
             migrationBuilder.RenameTable(
                 name: "Languages",
@@ -222,11 +201,6 @@ namespace WebSeeSharpers.Migrations
                 name: "IX_Languages_MovieId",
                 table: "Language",
                 newName: "IX_Language_MovieId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Movie",
-                table: "Movie",
-                column: "Id");
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Language",

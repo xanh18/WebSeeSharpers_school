@@ -16,12 +16,12 @@ public static class SeedData
                        DbContextOptions<WebSeeSharpersContext>>()))
         {
             // Look for any movies.
-            if (context.Movies.Any())
+            if (context.Movie.Any())
             {
                 return;   // DB has been seeded
             }
 
-            context.Movies.AddRange(
+            context.Movie.AddRange(
                 new Movie
                 {
                     Title = "When Harry Met Sally",
