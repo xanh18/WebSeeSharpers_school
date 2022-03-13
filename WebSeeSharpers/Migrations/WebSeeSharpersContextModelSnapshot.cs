@@ -95,10 +95,6 @@ namespace WebSeeSharpers.Migrations
                     b.Property<bool>("Movie3d")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Room")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Thumbnail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
