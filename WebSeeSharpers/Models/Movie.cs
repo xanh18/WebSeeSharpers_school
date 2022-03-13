@@ -17,4 +17,5 @@ public class Movie
     public List<Language> Language { get; set; }
     public String Description { get; set; }
     public String Genre { get; set; }
+    public String Room { get; set; }    
 }
