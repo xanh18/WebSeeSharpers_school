@@ -1,0 +1,31 @@
+﻿@model List<List<WebSeeSharpers.Services.SeatService.Seat>>
+
+@{
+    ViewData["Title"] = "Selecteer een plaats";
+}
+
+<div class="container">
+    <div class="w-100 overflow-auto">
+        @foreach (var row in Model)
+        {
+            <div class="d-flex">
+                @foreach (var seat in row)
+                {
+                    @if (seat.Occupied)
+                    {
+                        <div class="m-1 d-flex border rounded border-danger align-items-center justify-content-center flex-shrink-0" style="height: 3rem; width: 3rem">
+                            <p class="m-0">@seat.Number</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="m-1 d-flex border rounded border-info align-items-center justify-content-center flex-shrink-0" style="height: 3rem; width: 3rem">
+                            <p class="m-0">@seat.Number</p>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    </div>
+    @* <div class="border border-white w-100" style="height: 1.5rem">Scherm</div> *@
+</div>
