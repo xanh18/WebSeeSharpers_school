@@ -9,4 +9,6 @@ public class Theatre
     public int AmountOfRows { get; set; }
 
     public int AmountOfSeats { get; set; }
+
+    public ICollection<Viewing> Viewings { get; set; }
 }
