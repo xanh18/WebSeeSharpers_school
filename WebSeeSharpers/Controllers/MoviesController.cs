@@ -21,9 +21,29 @@ namespace WebSeeSharpers.Controllers
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            return View(await _context.Movie.ToListAsync());
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            var movies = from m in _context.Movie
+                           select m;
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    movies = movies.OrderByDescending(m => m.Title);
+                    break;
+                case "Date":
+                    movies = movies.OrderBy(m => m.BeginTime);
+                    break;
+                case "date_desc":
+                    movies = movies.OrderByDescending(m => m.BeginTime);
+                    break;
+                default:
+                    movies = movies.OrderBy(s => s.Title);
+                    break;
+            }
+
+            return View(await movies.ToListAsync());
         }
 
         // GET: Movies/Details/5
