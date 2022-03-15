@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebSeeSharpers.Models.Viewing>
+
+@{
+    ViewData["Title"] = "Films";
+}
+
+<h1>Films</h1>
+
+
+<table class="table text-white">
+    <thead>
+        <tr>
+            <th>
+               @Html.DisplayNameFor(model => model.Movie.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Theatre.Id)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+               <img src="@Html.DisplayFor(modelItem => item.Movie.Thumbnail)"style="max-height: 250px;"/>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDateTime)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.StartDateTime)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
