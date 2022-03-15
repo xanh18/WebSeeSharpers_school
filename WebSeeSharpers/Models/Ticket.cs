@@ -1,4 +1,6 @@
-﻿namespace WebSeeSharpers.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WebSeeSharpers.Models;
 
 public class Ticket
 {
@@ -13,5 +15,8 @@ public class Ticket
     public Boolean PopcornArrangement { get; set; }
 
     public decimal TotalPrice { get; set; }
+
+    [ForeignKey("Order")]
+    public int OrderId { get; set; }
 
 }
