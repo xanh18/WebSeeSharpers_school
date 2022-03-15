@@ -7,6 +7,14 @@
     <h1 class="display-4">Welkom bij SeeSharpers</h1>
     <h2>Nu in de bioscoop</h2>
     
+    @Html.ActionLink("Playing from", "Index", new { sortOrder = ViewBag.DateSortParm } )
+    @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.NameSortParm } )
+    @using (Html.BeginForm())
+    {
+        <p>
+            @Html.TextBox("SearchString")  
+            <input type="submit" value="Search" /></p>
+    }
     <div class="row">
         @foreach (var item in Model)
         {
