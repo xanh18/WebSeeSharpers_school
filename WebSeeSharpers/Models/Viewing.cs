@@ -6,6 +6,10 @@ public class Viewing
 
     public DateTime StartDateTime { get; set; }
 
+    public int MovieID { get; set; }
+
+    public int TheatreID { get; set; }
+
     public Theatre Theatre { get; set; }
 
     public Movie Movie { get; set; }

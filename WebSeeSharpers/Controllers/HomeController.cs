@@ -53,6 +53,11 @@ namespace WebSeeSharpers.Controllers
             return View();
         }
 
+        public ActionResult Viewings()
+        {
+            return RedirectToAction("Index", "Viewings");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
