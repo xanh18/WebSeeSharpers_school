@@ -11,6 +11,8 @@ namespace WebSeeSharpers.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly WebSeeSharpersContext _context;
+        private static SeatService _seatService;
+        private static List<List<Seat>> _rowList;
 
         public SeatSelectionController(WebSeeSharpersContext context, ILogger<HomeController> logger)
         {
@@ -20,27 +22,45 @@ namespace WebSeeSharpers.Controllers
 
         public IActionResult Index()
         {
-            Viewing? viewing = _context.Viewings
-                .Include(v => v.Theatre)
-                .Include(v => v.ViewingSeats)
-                .First(s => s.Id == 2);
-
-            if (viewing == null)
+            Viewing? viewing;
+            try
             {
-                Debug.WriteLine("No viewing found!");
+                viewing = GetViewing(2);
+            }
+            catch (Exception e)
+            {
                 return Redirect("/");
             }
 
-            var service = new SeatService(viewing, _context);
-            service.OccupyNextSeat(20);
+            if (viewing == null) return Redirect("/");
 
-            var rowList = service.GetSeatsOrderedByNumber();
+            _seatService = new SeatService(viewing, _context);
+            _seatService.OccupyNextSeat(7);
+            _rowList = _seatService.GetSeatsOrderedByNumber();
 
-            Debug.WriteLine("- - - - - - - -[Start]- - - - - - - -");
-            rowList.ForEach(r => { r.ForEach(s => Debug.WriteLine($"Rij: {s.RowNumber} Stoel: {s.Number}")); });
-            Debug.WriteLine("- - - - - - - -[End]- - - - - - - -");
+            return View(_rowList);
+        }
 
-            return View(rowList);
+        public void ReserveSeat_click(string seatX)
+        {
+
+            Debug.WriteLine(seatX);
+        }
+
+        private Viewing? GetViewing(int id)
+        {
+            try
+            {
+                return _context.Viewings
+                    .Include(v => v.Theatre)
+                    .Include(v => v.ViewingSeats)
+                    .First(s => s.Id == id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

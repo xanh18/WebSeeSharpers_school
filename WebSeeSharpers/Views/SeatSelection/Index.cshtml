@@ -5,7 +5,7 @@
 }
 
 <div class="container">
-    <div class="w-100 overflow-auto">
+    <div class="w-100 h-50 overflow-auto">
         @foreach (var row in Model)
         {
             <div class="d-flex">
@@ -19,13 +19,12 @@
                     }
                     else
                     {
-                        <div class="m-1 d-flex border rounded border-info align-items-center justify-content-center flex-shrink-0" style="height: 3rem; width: 3rem">
-                            <p class="m-0">@seat.Number</p>
-                        </div>
+                        <a class="m-1 d-flex border rounded border-info align-items-center justify-content-center flex-shrink-0" style="height: 3rem; width: 3rem">
+                                <p class="m-0">@seat.Number</p>
+                        </a>
                     }
                 }
             </div>
         }
     </div>
-    @* <div class="border border-white w-100" style="height: 1.5rem">Scherm</div> *@
 </div>
