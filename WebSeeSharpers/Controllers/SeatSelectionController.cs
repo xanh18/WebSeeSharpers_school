@@ -20,31 +20,45 @@ namespace WebSeeSharpers.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int viewingId)
         {
             Viewing? viewing;
             try
             {
-                viewing = GetViewing(2);
+                viewing = GetViewing(viewingId);
             }
             catch (Exception e)
             {
-                return Redirect("/");
+                return Redirect("/Viewings");
             }
 
-            if (viewing == null) return Redirect("/");
+            if (viewing == null) return Redirect("/Viewings");
 
             _seatService = new SeatService(viewing, _context);
-            _seatService.OccupyNextSeat(7);
+            var reservatedSeats = _seatService.OccupyNextSeat(1);
             _rowList = _seatService.GetSeatsOrderedByNumber();
 
             return View(_rowList);
         }
 
-        public void ReserveSeat_click(string seatX)
+        public IActionResult save(int viewingId)
         {
+            Viewing? viewing;
+            try
+            {
+                viewing = GetViewing(viewingId);
+            }
+            catch (Exception e)
+            {
+                return Redirect("/Viewings");
+            }
 
-            Debug.WriteLine(seatX);
+            if (viewing == null) return Redirect("/Viewings");
+
+            _seatService = new SeatService(viewing, _context);
+            var selectedSeats = _seatService.OccupyNextSeat(1);
+
+            return RedirectToAction("show", "Order", new { reservedSeats = SerializeSeatsToXAndYString(selectedSeats), viewingId = viewing.Id });
         }
 
         private Viewing? GetViewing(int id)
@@ -61,6 +75,18 @@ namespace WebSeeSharpers.Controllers
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        private string SerializeSeatsToXAndYString(List<Seat> seats)
+        {
+            string seatXAndYs = string.Empty;
+
+            seats.ForEach(s =>
+            {
+                seatXAndYs += $"{(int) s.Position.X}_{(int) s.Position.Y};";
+            });
+
+            return seatXAndYs;
         }
     }
 }

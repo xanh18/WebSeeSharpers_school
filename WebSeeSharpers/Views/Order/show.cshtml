@@ -1,0 +1,22 @@
+﻿@using WebSeeSharpers.Services.SeatService
+@model WebSeeSharpers.Models.Viewing
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+    <h1>Overzicht bestelling</h1>
+    <h2>Film</h2>
+    <p>@Model.Movie.Title</p>
+    
+    <h2>Stoelen</h2>
+    <ol>
+    @foreach (var seat in ViewBag.Seats)
+    {
+        <li class="border">
+            <p class="mb-0">Stoel nummer: @seat.Number</p>
+            <p>Rij nummer: @seat.RowNumber</p>
+        </li>
+    }
+    </ol>
+</div>

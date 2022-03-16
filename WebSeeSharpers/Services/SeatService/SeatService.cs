@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Microsoft.EntityFrameworkCore;
 using WebSeeSharpers.Data;
 using WebSeeSharpers.Models;
 using WebSeeSharpers.Services.SeatService.Exceptions;
@@ -160,6 +161,7 @@ public class SeatService
         try
         {
             _context.ViewingSeats.Add(viewingSeat);
+            _context.SaveChanges();
         }
         catch (Exception e)
         {
