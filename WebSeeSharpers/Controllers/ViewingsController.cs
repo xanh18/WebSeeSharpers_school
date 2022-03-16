@@ -52,7 +52,6 @@ namespace WebSeeSharpers.Controllers
         // GET: Viewings/Create
         public IActionResult Create()
         {
-            MovieDropDownList();
             return View();
         }
 
@@ -61,7 +60,7 @@ namespace WebSeeSharpers.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,StartDateTimem,MovieId")] Viewing viewing)
+        public async Task<IActionResult> Create([Bind("Id,StartDateTime")] Viewing viewing)
         {
             if (ModelState.IsValid)
             {   
@@ -69,7 +68,6 @@ namespace WebSeeSharpers.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            MovieDropDownList(viewing.MovieID);
             return View(viewing);
         }
 
@@ -81,15 +79,13 @@ namespace WebSeeSharpers.Controllers
                 return NotFound();
             }
 
-            var viewing = await _context.Viewings
-                .Include(m => m.Id)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(v => v.Id == id);
+            var viewing = await _context.Viewings.FindAsync(id);
             if (viewing == null)
             {
                 return NotFound();
+
+                
             }
-            MovieDropDownList(viewing.MovieID);
             return View(viewing);
         }
 
@@ -98,64 +94,51 @@ namespace WebSeeSharpers.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,starttime")] Viewing viewing)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var viewingToUpdate = await _context.Viewings
-                .Include(m => m.MovieID)
-                .FirstOrDefaultAsync(v => v.Id == id);
-            if (await TryUpdateModelAsync<Viewing>(viewingToUpdate,
-                "",
-                 m => m.Id))
+                if (id != viewing.Id)
+                {
+                    return NotFound();
+                }
 
                 if (ModelState.IsValid)
-            {
-                try
                 {
-                  
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                        //Log the error (uncomment ex variable name and write a log.)
-                        ModelState.AddModelError("", "Unable to save changes. " +
-                            "Try again, and if the problem persists, " +
-                            "see your system administrator.");
+                    try
+                    {
+                        _context.Update(viewing);
+                        await _context.SaveChangesAsync();
                     }
-                return RedirectToAction(nameof(Index));
-            }
-            MovieDropDownList(viewingToUpdate.MovieID);
-            return View(viewingToUpdate);
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!ViewingExists(viewing.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(viewing);
+        }
+            // GET: Viewings/Delete/5
+        public async Task<IActionResult> Delete(int? id) { 
+        
+        if (id == null)
+        {
+            return NotFound();
         }
 
-        private void MovieDropDownList(object selectedMovie = null)
+        var viewing = await _context.Viewings
+            .FirstOrDefaultAsync(m => m.Id == id);
+        if (viewing == null)
         {
-            var moviesQuery = from m in _context.Movie
-                                   orderby m.Title
-                                   select m;
-            ViewBag.MovieId = new SelectList(moviesQuery.AsNoTracking(), "MovieId", "Title", selectedMovie);
+            return NotFound();
         }
 
-        // GET: Viewings/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var viewing = await _context.Viewings
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (viewing == null)
-            {
-                return NotFound();
-            }
-
-            return View(viewing);
+        return View(viewing);
         }
 
         // POST: Viewings/Delete/5
