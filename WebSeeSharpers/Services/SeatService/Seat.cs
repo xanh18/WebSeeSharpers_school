@@ -2,6 +2,7 @@
 
 namespace WebSeeSharpers.Services.SeatService
 {
+    [Serializable]
     public class Seat
     {
         public int Number { get; set; }
