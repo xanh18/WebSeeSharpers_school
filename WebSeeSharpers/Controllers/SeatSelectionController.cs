@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebSeeSharpers.Data;
+using WebSeeSharpers.Helpers;
 using WebSeeSharpers.Models;
 using WebSeeSharpers.Services.SeatService;
 
@@ -11,8 +11,6 @@ namespace WebSeeSharpers.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly WebSeeSharpersContext _context;
-        private static SeatService _seatService;
-        private static List<List<Seat>> _rowList;
 
         public SeatSelectionController(WebSeeSharpersContext context, ILogger<HomeController> logger)
         {
@@ -32,13 +30,13 @@ namespace WebSeeSharpers.Controllers
                 return Redirect("/Viewings");
             }
 
-            if (viewing == null) return Redirect("/Viewings");
+            if (viewing == null)
+                return Redirect("/Viewings");
 
-            _seatService = new SeatService(viewing, _context);
-            var reservatedSeats = _seatService.OccupyNextSeat(1);
-            _rowList = _seatService.GetSeatsOrderedByNumber();
+            SeatService seatService = new(viewing, _context);
+            ViewBag.Rows = seatService.GetSeatsOrderedByNumber();
 
-            return View(_rowList);
+            return View(viewing);
         }
 
         public IActionResult save(int viewingId)
@@ -53,12 +51,38 @@ namespace WebSeeSharpers.Controllers
                 return Redirect("/Viewings");
             }
 
-            if (viewing == null) return Redirect("/Viewings");
+            if (viewing == null)
+                return Redirect("/Viewings");
 
-            _seatService = new SeatService(viewing, _context);
+            SeatService _seatService = new(viewing, _context);
             var selectedSeats = _seatService.OccupyNextSeat(1);
 
-            return RedirectToAction("show", "Order", new { reservedSeats = SerializeSeatsToXAndYString(selectedSeats), viewingId = viewing.Id });
+            return RedirectToAction("show", "Order",
+                new {reservedSeats = SeatPositionHelper.SerializeSeatToString(selectedSeats), viewingId = viewing.Id});
+        }
+
+        public IActionResult SaveCustom(string seatPosition, int viewingId)
+        {
+            Viewing? viewing;
+            try
+            {
+                viewing = GetViewing(viewingId);
+            }
+            catch (Exception e)
+            {
+                return Redirect("/Viewings");
+            }
+
+            if (viewing == null)
+                return Redirect("/Viewings");
+            
+            SeatService seatService = new(viewing, _context);
+            var positions = SeatPositionHelper.DeserializePositionToVector2List(seatPosition);
+
+            positions.ForEach(p => seatService.OccupySeat(p));
+
+            return RedirectToAction("show", "Order",
+                new {reservedSeats = SeatPositionHelper.SerializePositionToString(positions), viewingId = viewing.Id});
         }
 
         private Viewing? GetViewing(int id)
@@ -75,18 +99,6 @@ namespace WebSeeSharpers.Controllers
                 Console.WriteLine(e);
                 throw;
             }
-        }
-
-        private string SerializeSeatsToXAndYString(List<Seat> seats)
-        {
-            string seatXAndYs = string.Empty;
-
-            seats.ForEach(s =>
-            {
-                seatXAndYs += $"{(int) s.Position.X}_{(int) s.Position.Y};";
-            });
-
-            return seatXAndYs;
         }
     }
 }

@@ -8,29 +8,24 @@ namespace WebSeeSharpers.Controllers
 {
     public class ViewingsController : Controller
     {
-       
         private readonly WebSeeSharpersContext _context;
 
         public ViewingsController(WebSeeSharpersContext context, ILogger<ViewingsController> logger)
         {
             _context = context;
-  
         }
 
         // GET: Viewings
         public async Task<IActionResult> Index()
         {
-
-            var viewings = from v in _context.Viewings
-                           select v;
-            viewings = viewings.Where(v => v.StartDateTime > DateTime.Now && v.StartDateTime < (DateTime.Now.AddDays(7)));
+            var viewings = _context.Viewings.Where(v =>
+                v.StartDateTime > DateTime.Today && v.StartDateTime < (DateTime.Now.AddDays(7)));
 
             return View(await viewings
                 .Include(M => M.Movie)
                 .Include(T => T.Theatre)
                 .AsNoTracking()
                 .ToListAsync());
-
         }
 
 
@@ -67,11 +62,12 @@ namespace WebSeeSharpers.Controllers
         public async Task<IActionResult> Create([Bind("Id,StartDateTime")] Viewing viewing)
         {
             if (ModelState.IsValid)
-            {   
+            {
                 _context.Add(viewing);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(viewing);
         }
 
@@ -87,9 +83,8 @@ namespace WebSeeSharpers.Controllers
             if (viewing == null)
             {
                 return NotFound();
-
-                
             }
+
             return View(viewing);
         }
 
@@ -100,49 +95,52 @@ namespace WebSeeSharpers.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,starttime")] Viewing viewing)
         {
-                if (id != viewing.Id)
+            if (id != viewing.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
                 {
-                    return NotFound();
+                    _context.Update(viewing);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ViewingExists(viewing.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
 
-                if (ModelState.IsValid)
-                {
-                    try
-                    {
-                        _context.Update(viewing);
-                        await _context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        if (!ViewingExists(viewing.Id))
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            throw;
-                        }
-                    }
-                    return RedirectToAction(nameof(Index));
-                }
-                return View(viewing);
-        }
-            // GET: Viewings/Delete/5
-        public async Task<IActionResult> Delete(int? id) { 
-        
-        if (id == null)
-        {
-            return NotFound();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(viewing);
         }
 
-        var viewing = await _context.Viewings
-            .FirstOrDefaultAsync(m => m.Id == id);
-        if (viewing == null)
+        // GET: Viewings/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            return NotFound();
-        }
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        return View(viewing);
+            var viewing = await _context.Viewings
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (viewing == null)
+            {
+                return NotFound();
+            }
+
+            return View(viewing);
         }
 
         // POST: Viewings/Delete/5
