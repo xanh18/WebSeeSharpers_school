@@ -1,4 +1,5 @@
-﻿@model IEnumerable<WebSeeSharpers.Models.Viewing>
+﻿@using Microsoft.AspNetCore.Mvc.RazorPages
+@model IEnumerable<WebSeeSharpers.Models.Viewing>
 
 @{
     ViewData["Title"] = "FilmsTijden";
@@ -6,7 +7,6 @@
 
 <h1>Films</h1>
 
- 
 <div class="text-center">
    
     <h1 class="display-4">FilmTijden</h1>
@@ -17,12 +17,15 @@
         <div class="card bg-black text-white col-3 mx-2 p-2" style="width: 16rem;">
             <img src="@Html.DisplayFor(modelItem => item.Movie.Thumbnail)" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">@Html.DisplayFor(modelItem => item.Movie.Title)</h5>
-            
+                <h5 class="card-title">@Html.DisplayFor(modelItem => item.Movie.Title)</h5>    
             </div>
             <ul class="list-group list-group-flush">
                <li class="list-group-item bg-black text-white">@Html.DisplayFor(modelItem => item.StartDateTime)</li>
                <li class="list-group-item bg-black text-white">ZaalNummer: @Html.DisplayFor(modelItem => item.Theatre.Number)</li>
+               <li class="list-group-item bg-black text-white">
+                  @Html.ActionLink("Bestel ticket", "save", "SeatSelection", new { viewingId = item.Id })
+                  @* @Html.RouteLink("Bestel ticket", "seatSelection_auto", new { viewingId = item.Id }) *@
+               </li>
             </ul>
         </div>
         }

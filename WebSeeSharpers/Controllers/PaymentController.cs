@@ -4,7 +4,6 @@ using Mollie.Api.Client.Abstract;
 using Mollie.Api.Models;
 using Mollie.Api.Models.Payment.Request;
 using Mollie.Api.Models.Payment.Response;
-using WebSeeSharpers.Models;
 
 namespace WebSeeSharpers.Controllers
 {
