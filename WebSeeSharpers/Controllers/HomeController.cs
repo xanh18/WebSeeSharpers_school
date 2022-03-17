@@ -13,7 +13,6 @@ namespace WebSeeSharpers.Controllers
 
         public HomeController(WebSeeSharpersContext context, ILogger<HomeController> logger)
         {
-            
             _context = context;
             _logger = logger;
         }

@@ -37,8 +37,7 @@
                 @Html.DisplayFor(modelItem => item.StartDateTime)
             </td>
             <td>
-                @Html.ActionLink("Bestel ticket", "save", "SeatSelection", new { viewingId = item.Id })
-                @* @Html.RouteLink("Bestel ticket", "seatSelection_auto", new { viewingId = item.Id }) *@
+                <a asp-controller="SeatSelection" asp-action="Index" asp-route-viewingId="@item.Id" class="btn btn-info">Bestel ticket</a>
             </td>
         </tr>
     }

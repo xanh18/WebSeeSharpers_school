@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using WebSeeSharpers.Data;
 using WebSeeSharpers.Models;
@@ -40,6 +41,25 @@ public class SeatService
     }
 
     /**
+     * Get a list of seats based on more positions (Vector2)
+     */
+    public List<Seat> GetSeats(List<Vector2> positions)
+    {
+        List<Seat> seats = new();
+        positions.ForEach(pos =>
+        {
+            var foundedSeat = GetSeat(pos);
+
+            if (foundedSeat != null)
+            {
+                seats.Add(foundedSeat);
+            }
+        });
+
+        return seats;
+    }
+
+    /**
      * Set The next seat that is available occupied, and return the seats that are set to occupied.
      * <param name="amount">amount of seats that you want to occupy.</param>
      */
@@ -61,6 +81,21 @@ public class SeatService
         }
 
         return newOccupiedSeats;
+    }
+
+    public Seat? OccupySeat(Vector2 position)
+    {
+        var seat = GetSeat(position);
+
+        if (seat == null)
+            return null;
+
+        if (seat.Occupied)
+            return null;
+
+        return SaveOccupiedSeat(seat)
+            ? seat
+            : null;
     }
 
     /**
