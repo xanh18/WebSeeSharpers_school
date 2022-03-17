@@ -13,22 +13,31 @@ namespace WebSeeSharpers.Controllers
 {
     public class ViewingsController : Controller
     {
+       
         private readonly WebSeeSharpersContext _context;
 
-        public ViewingsController(WebSeeSharpersContext context)
+        public ViewingsController(WebSeeSharpersContext context, ILogger<ViewingsController> logger)
         {
             _context = context;
+  
         }
 
         // GET: Viewings
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Viewings
+
+            var viewings = from v in _context.Viewings
+                           select v;
+            viewings = viewings.Where(v => v.StartDateTime > DateTime.Now && v.StartDateTime < (DateTime.Now.AddDays(7)));
+
+            return View(await viewings
                 .Include(M => M.Movie)
                 .Include(T => T.Theatre)
                 .AsNoTracking()
                 .ToListAsync());
+
         }
+
 
         // GET: Viewings/Details/5
         public async Task<IActionResult> Details(int? id)

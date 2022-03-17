@@ -1,40 +1,30 @@
 ﻿@model IEnumerable<WebSeeSharpers.Models.Viewing>
 
 @{
-    ViewData["Title"] = "Films";
+    ViewData["Title"] = "FilmsTijden";
 }
 
 <h1>Films</h1>
 
+ 
+<div class="text-center">
+   
+    <h1 class="display-4">FilmTijden</h1>
+    <h2>Kies je film</h2>
 
-<table class="table text-white">
-    <thead>
-        <tr>
-            <th>
-               @Html.DisplayNameFor(model => model.Movie.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Theatre.Id)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+     <div class="row">
 @foreach (var item in Model) {
-        <tr>
-            <td>
-               <img src="@Html.DisplayFor(modelItem => item.Movie.Thumbnail)"style="max-height: 250px;"/>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDateTime)
-            </td>
-             <td>
-                @Html.DisplayFor(modelItem => item.StartDateTime)
-            </td>
-        </tr>
+        <div class="card bg-black text-white col-3 mx-2 p-2" style="width: 16rem;">
+            <img src="@Html.DisplayFor(modelItem => item.Movie.Thumbnail)" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">@Html.DisplayFor(modelItem => item.Movie.Title)</h5>
+            
+            </div>
+            <ul class="list-group list-group-flush">
+               <li class="list-group-item bg-black text-white">@Html.DisplayFor(modelItem => item.StartDateTime)</li>
+               <li class="list-group-item bg-black text-white">ZaalNummer: @Html.DisplayFor(modelItem => item.Theatre.Number)</li>
+            </ul>
+        </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>
