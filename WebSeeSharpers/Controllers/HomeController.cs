@@ -3,18 +3,25 @@ using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using WebSeeSharpers.Data;
 using WebSeeSharpers.Models;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Localization;
 
 namespace WebSeeSharpers.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        
         private readonly WebSeeSharpersContext _context;
+        private readonly ILogger<HomeController> _logger;
+        private readonly IStringLocalizer<HomeController> _localizer;
 
-        public HomeController(WebSeeSharpersContext context, ILogger<HomeController> logger)
+      
+
+        public HomeController(WebSeeSharpersContext context, ILogger<HomeController> logger, IStringLocalizer<HomeController> localizer)
         {
             _context = context;
             _logger = logger;
+            _localizer = localizer;
         }
 
         public async Task<IActionResult> Index(string sortOrder, string searchString)
@@ -45,6 +52,15 @@ namespace WebSeeSharpers.Controllers
             }
 
             return View(await movies.ToListAsync());
+        }
+
+        [HttpPost]
+        public IActionResult CultureManagement(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName, CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.Now.AddDays(30) });
+
+            return LocalRedirect(returnUrl);
         }
 
         public IActionResult Privacy()
