@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
 using WebSeeSharpers.Data;
 using WebSeeSharpers.Models;
 
@@ -11,6 +11,11 @@ builder.Services.AddDbContext<WebSeeSharpersContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//support globalization and localization
+builder.Services.AddLocalization(option => { option.ResourcesPath = "Resources"; });
+builder.Services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
+builder.Services.AddControllersWithViews();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -19,6 +24,15 @@ using (var scope = app.Services.CreateScope())
 
     SeedData.Initialize(services);
 }
+
+//Supported languages and default
+var supportedCultures = new[] { "nl", "en" };
+var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+app.UseRequestLocalization(localizationOptions);
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

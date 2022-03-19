@@ -1,10 +1,14 @@
-﻿@model IEnumerable<WebSeeSharpers.Models.Movie>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model IEnumerable<WebSeeSharpers.Models.Movie>
+@inject IViewLocalizer localizer
 @{
     ViewData["Title"] = "Home Page";
 }
 
+<partial name="_Culture"/>
+
 <div class="text-center">
-    <h1 class="display-4">Welkom bij SeeSharpers</h1>
+    <h1 class="display-4">@localizer["Welkom"]</h1>
     <h2>Nu in de bioscoop</h2>
     
     @Html.ActionLink("Playing from", "Index", new { sortOrder = ViewBag.DateSortParm } )
