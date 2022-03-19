@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using WebSeeSharpers.Data;
@@ -12,9 +13,9 @@ namespace WebSeeSharpers.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly WebSeeSharpersContext _context;
-        private readonly IStringLocalizer<HomeController> _localizer;
+        private readonly IHtmlLocalizer<HomeController> _localizer;
 
-        public HomeController(WebSeeSharpersContext context, ILogger<HomeController> logger, IStringLocalizer<HomeController> localizer)
+        public HomeController(WebSeeSharpersContext context, ILogger<HomeController> logger, IHtmlLocalizer<HomeController> localizer)
         {
             _context = context;
             _logger = logger;
@@ -52,13 +53,13 @@ namespace WebSeeSharpers.Controllers
         }
 
         [HttpPost]
-        public IActionResult CultureManagement(string culture)
+        public IActionResult CultureManagement(string culture, string returnUrl)
         {
             Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                 new CookieOptions {Expires = DateTimeOffset.Now.AddDays(30)});
 
-            return RedirectToAction(nameof(Index));
+            return LocalRedirect(returnUrl);
         }
 
         public IActionResult Privacy()
