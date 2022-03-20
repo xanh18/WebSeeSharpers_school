@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using WebSeeSharpers.Data;
 using WebSeeSharpers.Models;
 
@@ -11,6 +14,23 @@ builder.Services.AddDbContext<WebSeeSharpersContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//support globalization and localization
+builder.Services.AddLocalization(option => { option.ResourcesPath = "Resources"; });
+builder.Services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
+builder.Services.Configure<RequestLocalizationOptions>(
+    opt =>
+    {
+        var supportedCultures = new List<CultureInfo>
+        {
+            new CultureInfo("nl"),
+            new CultureInfo("en")
+        };
+        opt.DefaultRequestCulture = new RequestCulture("nl");
+        opt.SupportedCultures = supportedCultures;
+        opt.SupportedUICultures = supportedCultures;
+    });
+builder.Services.AddControllersWithViews();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -19,6 +39,11 @@ using (var scope = app.Services.CreateScope())
 
     SeedData.Initialize(services);
 }
+
+app.UseRequestLocalization(((IApplicationBuilder) app).ApplicationServices
+    .GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
