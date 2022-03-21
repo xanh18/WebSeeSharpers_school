@@ -26,16 +26,18 @@ public static class SeedData
                 {
                     Title = "When Harry Met Sally",
                     Duration = new TimeSpan(2, 10, 0),
-                    Genre = "Romantic Comedy",
+                    Genre = "Romantische Komedie",
+                    GenreEn = "Romantic Comedy",
                     Movie3d = false,
                     BeginTime = new DateTime(2022, 5, 15, 13, 30, 0),
                     AgeRequirement = 12,
                     Thumbnail = "https://media.s-bol.com/822q0MkjXEGo/847x1200.jpg",
-                    Description = "Harry and Sally have known each other for years, and are very good friends, but they fear sex would ruin the friendship."
+                    Description = "Harry en Sally kennen elkaar al jaren en zijn erg goede vrienden, maar ze zijn bang dat seks de vriendschap zou verpesten.",
+                    DescriptionEn = "Harry and Sally have known each other for years, and are very good friends, but they fear sex would ruin the friendship."
 
-                },
+                });
 
-                new Movie
+      /*          new Movie
                 {
                     Title = "Harry potter and the deadly hallows",
                     Duration = new TimeSpan(2, 0, 0),
@@ -106,7 +108,7 @@ public static class SeedData
                     AgeRequirement = 0,
                     Thumbnail = "https://flxt.tmsimg.com/assets/p12329215_p_v8_ap.jpg",
                     Description = "Dory (Ellen DeGeneres) is a wide-eyed, blue tang fish who suffers from memory loss every 10 seconds or so. The one thing she can remember is that she somehow became separated from her parents as a child. With help from her friends Nemo and Marlin, Dory embarks on an epic adventure to find them. Her journey brings her to the Marine Life Institute, a conservatory that houses diverse ocean species. Dory now knows that her family reunion will only happen if she can save mom and dad from captivity.",
-                });
+                });*/
 
             // Look for any Theatres.
             if (context.Theatres.Any())
@@ -170,7 +172,7 @@ public static class SeedData
 
             context.Viewings.AddRange(
 
-                new Viewing
+   /*             new Viewing
                 {
                     StartDateTime = new DateTime(2022, 5, 15, 13, 30, 0),
                     Movie = new Movie
@@ -192,7 +194,7 @@ public static class SeedData
 
                     }
 
-                },
+                },*/
 
                 new Viewing
                 {
@@ -203,11 +205,13 @@ public static class SeedData
                         Title = "James Bond, Spectre",
                         Duration = new TimeSpan(2, 10, 0),
                         Genre = "Action, Thriller",
+                        GenreEn = "Actie, Thriller",
                         Movie3d = false,
                         BeginTime = new DateTime(2022, 5, 17, 13, 30, 0),
                         AgeRequirement = 16,
                         Thumbnail = "https://www.vprogids.nl/.imaging/mte/gids/textimage-left/dam/cinema/13/79/68/image_13796859.jpeg/jcr:content/image_13796859.jpeg",
-                        Description = "A cryptic message from James Bond's past sends him on a trail to uncover the existence of a sinister organisation named SPECTRE. With a new threat dawning, Bond learns the terrible truth about the author of all his pain in his most recent missions."
+                        DescriptionEn = "A cryptic message from James Bond's past sends him on a trail to uncover the existence of a sinister organisation named SPECTRE. With a new threat dawning, Bond learns the terrible truth about the author of all his pain in his most recent missions.",
+                        Description = "Een cryptische boodschap uit het verleden van James Bond stuurt hem op een spoor om het bestaan van een sinistere organisatie genaamd SPECTRE te ontdekken. Met een nieuwe dreiging die aanbreekt, ontdekt Bond de verschrikkelijke waarheid over de auteur van al zijn pijn tijdens zijn meest recente missies."
                     },
                     Theatre = new Theatre
                     {

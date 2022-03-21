@@ -15,6 +15,10 @@ public class Movie
     public String Thumbnail { get; set; }
     public List<Language> Language { get; set; }
     public String Description { get; set; }
+
+    public String DescriptionEn { get; set; } 
     public String Genre { get; set; }
+
+    public String GenreEn { get; set; }
     public ICollection<Viewing> Viewings { get; set; }
 }
