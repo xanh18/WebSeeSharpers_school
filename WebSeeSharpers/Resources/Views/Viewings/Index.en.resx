@@ -117,28 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="At the cinema" xml:space="preserve">
-    <value>Nu in de bioscoop</value>
+  <data name="Choose movie" xml:space="preserve">
+    <value>Choose your movie</value>
   </data>
-  <data name="Date" xml:space="preserve">
-    <value>Datum</value>
+  <data name="Movie times" xml:space="preserve">
+    <value>Movie times</value>
   </data>
-  <data name="Duration" xml:space="preserve">
-    <value>Filmduur:</value>
+  <data name="Order tickets" xml:space="preserve">
+    <value>Order ticket</value>
   </data>
-  <data name="Release date" xml:space="preserve">
-    <value>Release date</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Zoeken</value>
-  </data>
-  <data name="Sort by" xml:space="preserve">
-    <value>Sorteer op:</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Titel</value>
-  </data>
-  <data name="Welcome" xml:space="preserve">
-    <value>Welkom bij SeeSharpers!</value>
+  <data name="Room number" xml:space="preserve">
+    <value>Room number:</value>
   </data>
 </root>

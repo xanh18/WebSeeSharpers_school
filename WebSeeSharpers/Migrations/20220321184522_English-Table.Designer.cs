@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebSeeSharpers.Data;
 
@@ -11,9 +12,10 @@ using WebSeeSharpers.Data;
 namespace WebSeeSharpers.Migrations
 {
     [DbContext(typeof(WebSeeSharpersContext))]
-    partial class WebSeeSharpersContextModelSnapshot : ModelSnapshot
+    [Migration("20220321184522_English-Table")]
+    partial class EnglishTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
