@@ -120,4 +120,10 @@
   <data name="Movies" xml:space="preserve">
     <value>Tickets &amp; Times</value>
   </data>
+  <data name="subscribe_button" xml:space="preserve">
+    <value>Subscribe</value>
+  </data>
+  <data name="subscribe_to_newsletter" xml:space="preserve">
+    <value>Subscribe to our Newsletter</value>
+  </data>
 </root>

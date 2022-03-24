@@ -24,9 +24,14 @@ public class NewsletterController : Controller
         {
             return RedirectToAction("WrongEmail"); ;
         }
-        
-        _context.Newsletter.Add(new Newsletter() {email = newsletterEmail});
-        _context.SaveChanges();
+
+        var result = _context.Newsletter.First(n => n.email == newsletterEmail);
+
+        if (result == null)
+        {
+            _context.Newsletter.Add(new Newsletter() { email = newsletterEmail });
+            _context.SaveChanges();
+        }
 
         return RedirectToAction("ThankYou");
     }

@@ -69,10 +69,10 @@
         </p>
         @using (Html.BeginForm("store", "Newsletter", FormMethod.Post))
         {
-            <label>Inscrhijven voor onze nieuwsbrief</label>
+            <label>@localizer["subscribe_to_newsletter"]</label>
             <p>
                 @Html.TextBox("newsletterEmail")
-                <input type="submit" value="Inschrijven"/>
+                <input type="submit" value="@localizer["subscribe_button"]"/>
             </p>
         }
     </div>

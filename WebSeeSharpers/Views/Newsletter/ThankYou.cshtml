@@ -1,7 +1,8 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer localizer
 @{
-    ViewData["Title"] = "Bedankt!";
+    ViewData["Title"] = @localizer["title"];
 }
 
-<h1>Bedankt!</h1>
-<p>Leuk dat je jou hebt ingeschreven voor de nieuwsbrief.</p>
+<h1>@localizer["title"]</h1>
+<p>@localizer["body"]</p>

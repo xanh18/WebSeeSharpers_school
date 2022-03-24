@@ -1,16 +1,17 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer localizer
 @{
-    ViewData["Title"] = "Bedankt!";
+    ViewData["Title"] = @localizer["title"];
 }
 
-<h1>Error!</h1>
-<p>Het opgegeven email adres is niet geldig.</p>
+<h1>@localizer["title"]</h1>
+<p>@localizer["body"]</p>
 
 @using (Html.BeginForm("store", "Newsletter", FormMethod.Post))
 {
-    <label>Inscrhijven voor onze nieuwsbrief</label>
+    <label>@localizer["subscribe_to_newsletter"]</label>
     <p>
         @Html.TextBox("newsletterEmail")
-        <input type="submit" value="Inschrijven"/>
+        <input type="submit" value="@localizer["subscribe_button"]"/>
     </p>
 }
