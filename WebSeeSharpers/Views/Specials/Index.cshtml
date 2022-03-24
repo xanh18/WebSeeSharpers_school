@@ -1,14 +1,10 @@
 ﻿@model IEnumerable<WebSeeSharpers.Models.Special>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Arrangementen";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+Arrangementen
 
 @foreach (var item in Model) {
     <div class="card bg-black text-white col-3 mx-2 p-2" style="width: 16rem;">
@@ -21,7 +17,9 @@
             <li class="list-group-item bg-black text-white"> @Html.DisplayFor(modelItem => item.Cost)</li>
             <li class="list-group-item bg-black text-white">
                 <asp:CheckBox ID=“CheckBox“ runat=““/>
+                <a asp-action="Details" asp-route-id="@item.Id">Selecteer</a>
             </li>
+            
         </ul>
     </div>
 

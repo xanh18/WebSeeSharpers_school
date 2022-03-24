@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace WebSeeSharpers.Migrations
 {
-    public partial class addSpecialTable : Migration
+    public partial class EnglishTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,33 +22,24 @@ namespace WebSeeSharpers.Migrations
                 oldType: "int",
                 oldNullable: true);
 
-            migrationBuilder.CreateTable(
-                name: "Special",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BeginDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TicketId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Special", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Special_Tickets_TicketId",
-                        column: x => x.TicketId,
-                        principalTable: "Tickets",
-                        principalColumn: "Id");
-                });
+            migrationBuilder.AddColumn<string>(
+                name: "DescriptionEn",
+                table: "Movie",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "GenreEn",
+                table: "Movie",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Special_TicketId",
-                table: "Special",
-                column: "TicketId");
+                name: "IX_ViewingSeats_ViewingId",
+                table: "ViewingSeats",
+                column: "ViewingId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Tickets_Orders_OrderId",
@@ -59,6 +49,13 @@ namespace WebSeeSharpers.Migrations
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
+            migrationBuilder.AddForeignKey(
+                name: "FK_ViewingSeats_Viewings_ViewingId",
+                table: "ViewingSeats",
+                column: "ViewingId",
+                principalTable: "Viewings",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -67,8 +64,21 @@ namespace WebSeeSharpers.Migrations
                 name: "FK_Tickets_Orders_OrderId",
                 table: "Tickets");
 
-            migrationBuilder.DropTable(
-                name: "Special");
+            migrationBuilder.DropForeignKey(
+                name: "FK_ViewingSeats_Viewings_ViewingId",
+                table: "ViewingSeats");
+
+            migrationBuilder.DropIndex(
+                name: "IX_ViewingSeats_ViewingId",
+                table: "ViewingSeats");
+
+            migrationBuilder.DropColumn(
+                name: "DescriptionEn",
+                table: "Movie");
+
+            migrationBuilder.DropColumn(
+                name: "GenreEn",
+                table: "Movie");
 
             migrationBuilder.AlterColumn<int>(
                 name: "OrderId",
