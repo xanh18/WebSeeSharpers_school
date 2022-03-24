@@ -47,11 +47,6 @@ namespace WebSeeSharpers.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ViewingSeats_ViewingId",
-                table: "ViewingSeats",
-                column: "ViewingId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Special_TicketId",
                 table: "Special",
                 column: "TicketId");
@@ -64,13 +59,6 @@ namespace WebSeeSharpers.Migrations
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_ViewingSeats_Viewings_ViewingId",
-                table: "ViewingSeats",
-                column: "ViewingId",
-                principalTable: "Viewings",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -79,16 +67,8 @@ namespace WebSeeSharpers.Migrations
                 name: "FK_Tickets_Orders_OrderId",
                 table: "Tickets");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_ViewingSeats_Viewings_ViewingId",
-                table: "ViewingSeats");
-
             migrationBuilder.DropTable(
                 name: "Special");
-
-            migrationBuilder.DropIndex(
-                name: "IX_ViewingSeats_ViewingId",
-                table: "ViewingSeats");
 
             migrationBuilder.AlterColumn<int>(
                 name: "OrderId",
