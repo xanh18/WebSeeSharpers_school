@@ -19,4 +19,5 @@ public class Ticket
     [ForeignKey("Order")]
     public int OrderId { get; set; }
 
+    public virtual ICollection<Special> Specials { get; set; }
 }

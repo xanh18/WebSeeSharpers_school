@@ -1,0 +1,28 @@
+﻿@model IEnumerable<WebSeeSharpers.Models.Special>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+@foreach (var item in Model) {
+    <div class="card bg-black text-white col-3 mx-2 p-2" style="width: 16rem;">
+        <div class="card-body">
+            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                    
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-black text-white"> @Html.DisplayFor(modelItem => item.Description)</li>
+            <li class="list-group-item bg-black text-white"> @Html.DisplayFor(modelItem => item.Cost)</li>
+            <li class="list-group-item bg-black text-white">
+                <asp:CheckBox ID=“CheckBox“ runat=““/>
+            </li>
+        </ul>
+    </div>
+
+}

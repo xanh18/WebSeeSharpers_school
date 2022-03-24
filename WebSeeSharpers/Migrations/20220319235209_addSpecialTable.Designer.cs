@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebSeeSharpers.Data;
 
@@ -11,9 +12,10 @@ using WebSeeSharpers.Data;
 namespace WebSeeSharpers.Migrations
 {
     [DbContext(typeof(WebSeeSharpersContext))]
-    partial class WebSeeSharpersContextModelSnapshot : ModelSnapshot
+    [Migration("20220319235209_addSpecialTable")]
+    partial class addSpecialTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,18 +87,10 @@ namespace WebSeeSharpers.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DescriptionEn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
                     b.Property<string>("Genre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GenreEn")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -67,6 +67,11 @@ namespace WebSeeSharpers.Controllers
             return View();
         }
 
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
         public ActionResult Viewings()
         {
             return RedirectToAction("Index", "Viewings");
