@@ -85,10 +85,18 @@ namespace WebSeeSharpers.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DescriptionEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
                     b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GenreEn")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
