@@ -17,7 +17,7 @@ Arrangementen
             <li class="list-group-item bg-black text-white"> @Html.DisplayFor(modelItem => item.Cost)</li>
             <li class="list-group-item bg-black text-white">
                 <asp:CheckBox ID=“CheckBox“ runat=““/>
-                <a asp-action="Details" asp-route-id="@item.Id">Selecteer</a>
+                <a asp-action="Details" class="btn btn-info" asp-route-id="@item.Id">Selecteer</a>
             </li>
             
         </ul>
