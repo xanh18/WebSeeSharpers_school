@@ -37,5 +37,6 @@ namespace WebSeeSharpers.Data
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Viewing> Viewings { get; set; }
         public DbSet<ViewingSeat> ViewingSeats { get; set; }
+        public DbSet<Newsletter> Newsletter { get; set; }
     }
 }

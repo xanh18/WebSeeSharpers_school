@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer localizer
+@{
+    ViewData["Title"] = @localizer["title"];
+}
+
+<h1>@localizer["title"]</h1>
+<p>@localizer["body"]</p>
+
+@using (Html.BeginForm("store", "Newsletter", FormMethod.Post))
+{
+    <label>@localizer["subscribe_to_newsletter"]</label>
+    <p>
+        @Html.TextBox("newsletterEmail")
+        <input type="submit" value="@localizer["subscribe_button"]"/>
+    </p>
+}

@@ -117,13 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Movies" xml:space="preserve">
-    <value>Tickets &amp; Times</value>
+  <data name="body" xml:space="preserve">
+    <value>Thank you for subscribing to our newsletter</value>
   </data>
-  <data name="subscribe_button" xml:space="preserve">
-    <value>Inschrijven</value>
-  </data>
-  <data name="subscribe_to_newsletter" xml:space="preserve">
-    <value>Inscrhijven voor onze nieuwsbrief</value>
+  <data name="title" xml:space="preserve">
+    <value>Thank you!</value>
   </data>
 </root>
