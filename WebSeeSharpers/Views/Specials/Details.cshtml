@@ -1,0 +1,30 @@
+﻿@model WebSeeSharpers.Models.Special
+
+@{
+    ViewData["Title"] = "Arrangementen";
+}
+<div>
+    <h4>Arrangementen</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayFor(model => model.Cost);
+        </dt>
+        <dd class = "col-sm-10">
+            @if(Model.Id > 0)
+            {
+                var cost = 16 + Model.Cost;
+                @Html.DisplayFor(modelItem => cost)
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-info">Terug</a>
+</div>
