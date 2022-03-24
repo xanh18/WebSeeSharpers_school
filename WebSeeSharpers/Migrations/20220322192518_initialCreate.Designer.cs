@@ -12,11 +12,12 @@ using WebSeeSharpers.Data;
 namespace WebSeeSharpers.Migrations
 {
     [DbContext(typeof(WebSeeSharpersContext))]
-    [Migration("20220310235539_Models")]
-    partial class Models
+    [Migration("20220322192518_initialCreate")]
+    partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
+#pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
@@ -86,10 +87,18 @@ namespace WebSeeSharpers.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DescriptionEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
                     b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GenreEn")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -173,7 +182,7 @@ namespace WebSeeSharpers.Migrations
                     b.Property<int>("DiscountType")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrderId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<bool>("PopcornArrangement")
@@ -237,6 +246,8 @@ namespace WebSeeSharpers.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ViewingId");
+
                     b.ToTable("ViewingSeats");
                 });
 
@@ -251,19 +262,21 @@ namespace WebSeeSharpers.Migrations
                 {
                     b.HasOne("WebSeeSharpers.Models.Order", null)
                         .WithMany("Tickets")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WebSeeSharpers.Models.Viewing", b =>
                 {
                     b.HasOne("WebSeeSharpers.Models.Movie", "Movie")
-                        .WithMany()
+                        .WithMany("Viewings")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("WebSeeSharpers.Models.Theatre", "Theatre")
-                        .WithMany()
+                        .WithMany("Viewings")
                         .HasForeignKey("TheatreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -273,14 +286,37 @@ namespace WebSeeSharpers.Migrations
                     b.Navigation("Theatre");
                 });
 
+            modelBuilder.Entity("WebSeeSharpers.Models.ViewingSeat", b =>
+                {
+                    b.HasOne("WebSeeSharpers.Models.Viewing", "Viewing")
+                        .WithMany("ViewingSeats")
+                        .HasForeignKey("ViewingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Viewing");
+                });
+
             modelBuilder.Entity("WebSeeSharpers.Models.Movie", b =>
                 {
                     b.Navigation("Language");
+
+                    b.Navigation("Viewings");
                 });
 
             modelBuilder.Entity("WebSeeSharpers.Models.Order", b =>
                 {
                     b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("WebSeeSharpers.Models.Theatre", b =>
+                {
+                    b.Navigation("Viewings");
+                });
+
+            modelBuilder.Entity("WebSeeSharpers.Models.Viewing", b =>
+                {
+                    b.Navigation("ViewingSeats");
                 });
 #pragma warning restore 612, 618
         }
