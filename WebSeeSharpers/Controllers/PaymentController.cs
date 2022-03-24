@@ -11,7 +11,7 @@ namespace WebSeeSharpers.Controllers
     {
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        /*public async Task<IActionResult> Index()
         {
             IPaymentClient paymentClient = new PaymentClient("test_kaN7VyneuvgknQKDjn9kmSJExTDux2");
             PaymentRequest paymentRequest = new PaymentRequest()
@@ -25,6 +25,16 @@ namespace WebSeeSharpers.Controllers
             PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
             
             return View(paymentResponse.Links.Checkout);
+        }*/
+
+        public async Task<IActionResult> Index()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Paid()
+        {
+            return View();
         }
     }
 }
