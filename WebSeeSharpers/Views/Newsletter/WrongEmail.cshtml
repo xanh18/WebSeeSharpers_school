@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Bedankt!";
+}
+
+<h1>Error!</h1>
+<p>Het opgegeven email adres is niet geldig.</p>
+
+@using (Html.BeginForm("store", "Newsletter", FormMethod.Post))
+{
+    <label>Inscrhijven voor onze nieuwsbrief</label>
+    <p>
+        @Html.TextBox("newsletterEmail")
+        <input type="submit" value="Inschrijven"/>
+    </p>
+}
