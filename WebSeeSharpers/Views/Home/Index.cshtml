@@ -1,20 +1,30 @@
-﻿@model IEnumerable<WebSeeSharpers.Models.Movie>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model IEnumerable<WebSeeSharpers.Models.Movie>
+@inject IViewLocalizer localizer
 @{
     ViewData["Title"] = "Home Page";
 }
 
+
 <div class="text-center">
-    <h1 class="display-4">Welkom bij SeeSharpers</h1>
-    <h2>Nu in de bioscoop</h2>
-    
-    @Html.ActionLink("Playing from", "Index", new { sortOrder = ViewBag.DateSortParm } )
-    @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.NameSortParm } )
-    @using (Html.BeginForm())
-    {
-        <p>
-            @Html.TextBox("SearchString")  
-            <input type="submit" value="Search" /></p>
-    }
+    <h1 class="display-4">@localizer["Welcome"]</h1>
+    <h2>@localizer["At the cinema"]</h2>
+
+    <div class="row m-3">
+        <p class="col-1 m-1">@localizer["Sort by"]</p>
+        <a class="btn btn-primary col-2 m-1" href="@Url.Action("Index", "Home", new { sortOrder = ViewBag.DateSortParm })">@localizer["Date"]</a>
+        <a class="btn btn-primary col-2 m-1" href="@Url.Action("Index", "Home", new { sortOrder = ViewBag.NameSortParm })">@localizer["Title"]</a>
+        <div class="m-1">
+            @using (Html.BeginForm())
+            {
+                <p>
+                    @Html.TextBox("SearchString")
+                    <input type="submit" value="@localizer["Search"]" />
+                </p>
+            }
+        </div>
+    </div>
+
     <div class="row">
         @foreach (var item in Model)
         {
@@ -25,9 +35,16 @@
                     
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item bg-black text-white">@Html.DisplayNameFor(model => model.Duration) @Html.DisplayFor(modelItem => item.Duration)</li>
-                    <li class="list-group-item bg-black text-white">@Html.DisplayNameFor(model => model.Description) @Html.DisplayFor(modelItem => item.Description)</li>
-                    <li class="list-group-item bg-black text-white">@Html.DisplayNameFor(model => model.BeginTime) @Html.DisplayFor(modelItem => item.BeginTime)</li>
+
+                    <li class="list-group-item bg-black text-white">@localizer["Duration"] @Html.DisplayFor(modelItem => item.Duration)</li>
+
+                    @if (@Context.Request.Cookies[".AspNetCore.Culture"].EndsWith("nl"))
+                    {
+                        <li class="list-group-item bg-black text-white">@Html.DisplayFor(modelItem => item.Description)</li>
+                    }   else    {
+                        <li class="list-group-item bg-black text-white">@Html.DisplayFor(modelItem => item.DescriptionEn)</li>   
+                    }
+                    <li class="list-group-item bg-black text-white">@localizer["Release date"] @Html.DisplayFor(modelItem => item.BeginTime)</li>
                 </ul>
             </div>
         }

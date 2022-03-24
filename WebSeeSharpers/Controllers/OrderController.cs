@@ -2,8 +2,8 @@
 using System.Numerics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WebSeeSharpers.Data;
+using WebSeeSharpers.Helpers;
 using WebSeeSharpers.Models;
 using WebSeeSharpers.Services.SeatService;
 
@@ -36,11 +36,11 @@ public class OrderController : Controller
         if (viewing == null)
             return Redirect("/Viewings");
 
-        var seats = GetSeats(reservedSeats, viewing);
+        SeatService service = new(viewing, _context);
 
-        Debug.WriteLine(seats.Count);
+        var seatPositions = SeatPositionHelper.DeserializePositionToVector2List(reservedSeats);
 
-        ViewBag.Seats = seats.ToArray();
+        ViewBag.Seats = service.GetSeats(seatPositions).ToArray();
         return View("show", viewing);
     }
 
@@ -59,31 +59,5 @@ public class OrderController : Controller
             Console.WriteLine(e);
             throw;
         }
-    }
-
-    private List<Seat> GetSeats(string seatsPositions, Viewing viewing)
-    {
-        var seatPositionsSplit = seatsPositions.Split(';');
-        List<Vector2> vectorList = new();
-        foreach (var position in seatPositionsSplit)
-        {
-            var positionXAndY = position.Split('_');
-            if (positionXAndY.Length < 2)
-                continue;
-
-            vectorList.Add(new(Convert.ToSingle(positionXAndY[0]), Convert.ToSingle(positionXAndY[1])));
-            Debug.WriteLine(position);
-        }
-
-        return GetSeatsFromVectorList(vectorList, viewing);
-    }
-
-    private List<Seat> GetSeatsFromVectorList(List<Vector2> positions, Viewing viewing)
-    {
-        SeatService seatService = new(viewing, _context);
-        List<Seat?> seats = new();
-
-        positions.ForEach(p => { seats.Add(seatService.GetSeat(p)); });
-        return seats;
     }
 }

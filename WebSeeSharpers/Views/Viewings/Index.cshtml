@@ -1,46 +1,34 @@
-﻿@using Microsoft.AspNetCore.Mvc.RazorPages
+﻿@using Microsoft.AspNetCore.Mvc.Localization
 @model IEnumerable<WebSeeSharpers.Models.Viewing>
+@inject IViewLocalizer localizer;
 
 @{
-    ViewData["Title"] = "Films";
+    ViewData["Title"] = "FilmsTijden";
 }
+<div class="text-center">
 
-<h1>Films</h1>
-<p>Die op dit moment draaien.</p>
+    <h1 class="display-4">@localizer["Movie times"]</h1>
+    <h2>@localizer["Choose movie"]</h2>
 
-<table class="table text-white">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Movie.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDateTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Theatre.Id)
-        </th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                <img src="@Html.DisplayFor(modelItem => item.Movie.Thumbnail)"style="max-height: 250px;"/>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDateTime)
-            </td>
-            <td>
-                @Html.ActionLink("Bestel ticket", "save", "SeatSelection", new { viewingId = item.Id })
-                @* @Html.RouteLink("Bestel ticket", "seatSelection_auto", new { viewingId = item.Id }) *@
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="card bg-black text-white col-3 mx-2 p-2" style="width: 16rem;">
+                <img src="@Html.DisplayFor(modelItem => item.Movie.Thumbnail)" class="card-img-top" alt="...">
+                
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Movie.Title)</h5>
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-black text-white">@Html.DisplayFor(modelItem => item.StartDateTime)</li>
+                    <li class="list-group-item bg-black text-white">@localizer["Room number"] @Html.DisplayFor(modelItem => item.Theatre.Number)</li>
+                    <li class="list-group-item bg-black text-white">
+                        <a asp-controller="SeatSelection" asp-action="Index" asp-route-viewingId="@item.Id" class="btn btn-info">@localizer["Order tickets"]</a>
+                    </li>
+                </ul>
+
+            </div>
+        }
+    </div>
+</div>

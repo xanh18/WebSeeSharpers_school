@@ -1,4 +1,4 @@
-﻿@model List<List<WebSeeSharpers.Services.SeatService.Seat>>
+﻿@model Viewing
 
 @{
     ViewData["Title"] = "Selecteer een plaats";
@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="w-100 h-50 overflow-auto">
-        @foreach (var row in Model)
+        @foreach (var row in ViewBag.Rows)
         {
             <div class="d-flex">
                 @foreach (var seat in row)
@@ -20,11 +20,15 @@
                     else
                     {
                         <div class="m-1 d-flex border rounded border-info align-items-center justify-content-center flex-shrink-0" style="height: 3rem; width: 3rem">
-                                <p class="m-0">@seat.Number</p>
+                            <p class="m-0">
+                                @Html.ActionLink($"{seat.Number}", "SaveCustom", "SeatSelection", new {seatPosition = $"{(int) seat.Position.X}_{(int) seat.Position.Y};", viewingId = Model.Id})
+                            </p>
                         </div>
                     }
                 }
             </div>
         }
     </div>
+
+    <a asp-controller="SeatSelection" asp-action="save" asp-route-viewingId="@Model.Id" class="btn btn-info">Stoel automatisch toewijzen</a>
 </div>
