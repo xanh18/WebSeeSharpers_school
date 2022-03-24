@@ -28,6 +28,7 @@ namespace WebSeeSharpers.Data
                 .HasMany<ViewingSeat>(v => v.ViewingSeats);
         }
 
+        public DbSet<Special> Special { get; set; }
         public DbSet<Movie> Movie { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Language> Languages { get; set; }
