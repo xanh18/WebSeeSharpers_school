@@ -1,5 +1,7 @@
 ﻿@using WebSeeSharpers.Services.SeatService
+@using Microsoft.AspNetCore.Mvc.Localization
 @model WebSeeSharpers.Models.Viewing
+@inject IViewLocalizer localizer;
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -11,13 +13,16 @@
     
     <h2>Stoelen</h2>
     <ol>
-    @foreach (var seat in ViewBag.Seats)
-    {
-        <li class="border">
-            <p class="mb-0">Stoel nummer: @seat.Number</p>
-            <p>Rij nummer: @seat.RowNumber</p>
-        </li>
-    }
+        @foreach (var seat in ViewBag.Seats)
+        {
+            <li class="border">
+                <p class="mb-0">Stoel nummer: @seat.Number</p>
+                <p>Rij nummer: @seat.RowNumber</p>
+            </li>
+            <li class="list-group-item bg-black text-white">
+                <a asp-controller="Payment" asp-action="Index" class="btn btn-info">@localizer["Payment"]</a>
+            </li>
+        }
     </ol>
     <a asp-controller="Specials" class="btn btn-info" asp-action="Index">Specials</a>
 </div>
