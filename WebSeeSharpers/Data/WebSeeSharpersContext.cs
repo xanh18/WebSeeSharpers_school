@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebSeeSharpers.Models;
 
 namespace WebSeeSharpers.Data
 {
-    public class WebSeeSharpersContext : DbContext
+    public class WebSeeSharpersContext : IdentityDbContext<IdentityUser, IdentityRole,string>
     {
         public WebSeeSharpersContext(DbContextOptions<WebSeeSharpersContext> options)
             : base(options)
@@ -26,6 +28,8 @@ namespace WebSeeSharpers.Data
 
             modelBuilder.Entity<Viewing>()
                 .HasMany<ViewingSeat>(v => v.ViewingSeats);
+
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Special> Special { get; set; }

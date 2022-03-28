@@ -1,15 +1,21 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel;
+using System.Globalization;
+using System.Reflection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using WebSeeSharpers.Data;
 using WebSeeSharpers.Models;
+using SimpleInjector;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<WebSeeSharpersContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebSeeSharpersContext")));
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<WebSeeSharpersContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -43,8 +49,6 @@ using (var scope = app.Services.CreateScope())
 app.UseRequestLocalization(((IApplicationBuilder) app).ApplicationServices
     .GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 
-
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -58,7 +62,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
