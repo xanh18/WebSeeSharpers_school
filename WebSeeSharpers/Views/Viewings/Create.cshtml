@@ -8,6 +8,7 @@
 
 <h4>Viewing</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -17,19 +18,30 @@
                 <input asp-for="StartDateTime" class="form-control" />
                 <span asp-validation-for="StartDateTime" class="text-danger"></span>
             </div>
+
+              <div class="form-group">
+                <label asp-for="Theatre" class="control-label"></label>
+                <select asp-for="TheatreId" class="form-control" asp-items="ViewBag.TheatreId">
+                    <option value="">-- Select Theatre --</option>
+                </select>
+                <span asp-validation-for="TheatreId" class="text-danger" />
+            </div>
+
             <div class="form-group">
                 <label asp-for="Movie" class="control-label"></label>
-                <select asp-for="Id" class="form-control" asp-items="ViewBag.DepartmentID">
-                <option value="">-- Select Movie --</option>
+                <select asp-for="MovieId" class="form-control" asp-items="ViewBag.MovieId">
+                    <option value="">-- Select Movie --</option>
                 </select>
-                <span asp-validation-for="Id" class="text-danger" />
+                <span asp-validation-for="MovieId" class="text-danger" />
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+
 
 <div>
     <a asp-action="Index">Back to List</a>

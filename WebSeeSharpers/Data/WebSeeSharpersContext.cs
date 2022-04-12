@@ -10,7 +10,7 @@ using WebSeeSharpers.Models;
 
 namespace WebSeeSharpers.Data
 {
-    public class WebSeeSharpersContext : IdentityDbContext<IdentityUser, IdentityRole,string>
+    public class WebSeeSharpersContext : IdentityDbContext<ApplicationUser, IdentityRole,string>
     {
         public WebSeeSharpersContext(DbContextOptions<WebSeeSharpersContext> options)
             : base(options)
@@ -29,6 +29,9 @@ namespace WebSeeSharpers.Data
             modelBuilder.Entity<Viewing>()
                 .HasMany<ViewingSeat>(v => v.ViewingSeats);
 
+            modelBuilder.Entity<Rating>()
+             .HasOne<Movie>(v => v.Movie);
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -42,5 +45,7 @@ namespace WebSeeSharpers.Data
         public DbSet<Viewing> Viewings { get; set; }
         public DbSet<ViewingSeat> ViewingSeats { get; set; }
         public DbSet<Newsletter> Newsletter { get; set; }
+        public DbSet<LostItem> LostItems { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
     }
 }

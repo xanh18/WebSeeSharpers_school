@@ -34,6 +34,45 @@
                        <li class="nav-item m-3">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                         </li>
+                          <li class="nav-item m-3">
+                            <a class="nav-link text-white" asp-area="" asp-controller="LostItems" asp-action="Index">@localizer["LostItems"].Value</a>
+                        </li>
+                        @if ((this.User.IsInRole("Admin") || (this.User.IsInRole("Bioscoopmanager")  == true )))
+                        {
+                            <li class="nav-item m-3">
+                                <a class="nav-link text-white" href="/user/listRoles">beheer</a>
+                            </li>
+                        }
+                        @if(User?.Identity?.IsAuthenticated == false)
+                        {
+                            <li class="nav-item m-3">
+                            <a class="nav-link text-white" href="/Identity/Account/Register">Register</a>
+                        </li>
+                        }
+                        @if(User?.Identity?.IsAuthenticated == false)
+                        {
+                            <li class="nav-item m-3">
+                            <a class="nav-link text-white" href="/Identity/Account/Login">Login</a>
+                        </li>
+                        }
+                        @if(User?.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item m-3">
+                            <a class="nav-link text-white" href="/Identity/Account/Logout">Logout</a>
+                        </li>
+                        }
+                        @if(User?.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item m-3">
+                            <a class="nav-link text-white" href="/Identity/Account/index">Account</a>
+                        </li>
+                        }
+                        @if ((this.User.IsInRole("Admin") || (this.User.IsInRole("Bioscoopmanager") || (this.User.IsInRole("Backoffice")  == true))))
+                        {
+                            <li class="nav-item m-3">
+                            <a class="nav-link text-white" href="/viewings/create">Voorstelling toevoegen</a>
+                        </li>
+                        }
                     </ul>
                     <ul class="navbar-nav sm-icons">
                         <li class="nav-item m-3">
@@ -52,7 +91,11 @@
             @RenderBody()
         </main>
     </div>
-
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 <footer class="border-top footer text-muted">
     <div class="container d-flex justify-content-between">
         <p>

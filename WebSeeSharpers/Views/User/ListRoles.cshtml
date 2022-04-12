@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<IdentityRole>
+
+@{
+    ViewData["Title"] = "All Roles";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    @if(Model.Any())
+    {
+        <div class="col-md-12">
+        <a asp-controller="user" asp-action="CreateRole" class="btn btn-primary">Add a new Role</a>
+        </div>
+
+            foreach (var role in Model)
+            { 
+                <div class="card col-md-3" style="width: 18rem;" >
+                    <div class="card-body" style="background-color: dimgrey">
+                        <h5 class="card-title">Role Id: @role.Id</h5>
+                        <p class="card-text">Name: @role.Name</p>
+                        <a asp-controller="user" asp-action="EditRole" asp-route-id="@role.Id" class="btn btn-primary">Edit</a>
+                        <form asp-action="DeleteRole" asp-route-id="@role.Id" method="post">
+                            <span id="confirmDeleteSpan_@role.Id" style="display:none">
+                                <span>Are you sure you want to delete?</span>
+                                <button type="submit" class="btn btn-danger">Yes</button>
+                                <a href="#" class="btn btn-primary"
+                            onclick="confirmDelete('@role.Id', false)">No</a>
+                            </span>
+                            <span id="deleteSpan_@role.Id">
+                                <a href="#" class="btn btn-danger"
+                            onclick="confirmDelete('@role.Id', true)">Delete</a>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            }
+    }
+
+    else
+    { 
+        <div class="card col-md-3" style="width: 18rem;">
+            <div class="card-body bg-color" style="background-color: dimgrey">
+                <h5 class="card-title">Create Roles</h5>
+                <p class="card-text">User the button below to create a role</p>
+                <a asp-controller="user" asp-action="CreateRole" class="btn btn-primary">Create Role</a>
+            </div>
+        </div>
+
+    }
+</div>
+
+<script>
+function confirmDelete(uniqueId, isTrue) {
+
+    var deleteSpan = 'deleteSpan_' + uniqueId;
+    var confirmDeleteSpan = 'confirmDeleteSpan_' + uniqueId;
+
+    if (isTrue) {
+        $('#' + deleteSpan).hide();
+        $('#' + confirmDeleteSpan).show();
+    } else {
+        $('#' + deleteSpan).show();
+        $('#' + confirmDeleteSpan).hide();
+    }
+}
+</script>

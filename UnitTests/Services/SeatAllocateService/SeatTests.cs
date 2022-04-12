@@ -1,13 +1,12 @@
 ﻿using System.Numerics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebSeeSharpers.Services.SeatService;
+using Xunit;
 
 namespace UnitTests.Services.SeatAllocateService;
 
-[TestClass]
 public class SeatTests
 {
-    [TestMethod]
+    [Fact]
     public void Number_CanSetSeatNumber_NumberIsSet()
     {
         // Arrange
@@ -17,10 +16,10 @@ public class SeatTests
         seat.Number = 14;
 
         // Assert
-        Assert.AreEqual(14, seat.Number);
+        Assert.Equal(14, seat.Number);
     }
 
-    [TestMethod]
+    [Fact]
     public void Number_NumberIsDefined_ReturnsInt()
     {
         // Arrange
@@ -30,10 +29,10 @@ public class SeatTests
         var result = seat.Number;
 
         // Assert
-        Assert.AreEqual(12, result);
+        Assert.Equal(12, result);
     }
 
-    [TestMethod]
+    [Fact]
     public void RowNumber_RowNumberIsDefined_ReturnsInt()
     {
         // Arrange
@@ -43,10 +42,10 @@ public class SeatTests
         var result = seat.RowNumber;
 
         // Assert
-        Assert.AreEqual(6, result);
+        Assert.Equal(6, result);
     }
 
-    [TestMethod]
+    [Fact]
     public void Position_VectorOfTheSeat_ReturnsVector2()
     {
         // Arrange
@@ -57,10 +56,10 @@ public class SeatTests
         var result = seat.Position;
 
         // Assert
-        Assert.AreEqual(vector2, result);
+        Assert.Equal(vector2, result);
     }
 
-    [TestMethod]
+    [Fact]
     public void Occupied_SeatIsOccupied_ReturnsTrue()
     {
         // Arrange
@@ -70,10 +69,10 @@ public class SeatTests
         var result = seat.Occupied;
 
         // Assert
-        Assert.IsTrue(result);
+        Assert.True(result);
     }
 
-    [TestMethod]
+    [Fact]
     public void Occupied_SeatIsNotOccupied_ReturnsFalse()
     {
         // Arrange
@@ -83,10 +82,10 @@ public class SeatTests
         var result = seat.Occupied;
 
         // Assert
-        Assert.IsFalse(result);
+        Assert.False(result);
     }
 
-    [TestMethod]
+    [Fact]
     public void Equals_TwoSeatsAreEqual_ReturnsTrue()
     {
         // Arrange
@@ -97,10 +96,10 @@ public class SeatTests
         var result = seat.Equals(seat2);
 
         // Assert
-        Assert.IsTrue(result);
+        Assert.True(result);
     }
 
-    [TestMethod]
+    [Fact]
     public void Equals_TwoSeatsAreNotEqual_ReturnsFalse()
     {
         // Arrange
@@ -111,6 +110,6 @@ public class SeatTests
         var result = seat.Equals(seat2);
 
         // Assert
-        Assert.IsFalse(result);
+        Assert.False(result);
     }
 }

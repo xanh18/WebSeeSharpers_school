@@ -7,7 +7,7 @@ namespace WebSeeSharpers.Models;
 public class Movie
 {
     public int Id { get; set; }
-    public String Title { get; set; }
+    public String Title { get; set; } 
     public TimeSpan Duration { get; set; }
     public Boolean Movie3d { get; set; }
     public DateTime BeginTime { get; set; }

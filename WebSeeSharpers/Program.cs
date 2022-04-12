@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -15,7 +16,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<WebSeeSharpersContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebSeeSharpersContext")));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<WebSeeSharpersContext>();
+
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+//      .AddEntityFrameworkStores<WebSeeSharpersContext>();
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<WebSeeSharpersContext>().AddDefaultUI();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -35,6 +42,14 @@ builder.Services.Configure<RequestLocalizationOptions>(
         opt.SupportedCultures = supportedCultures;
         opt.SupportedUICultures = supportedCultures;
     });
+
+
+builder.Services.AddAuthentication()
+    .AddGoogle(options => {
+    options.ClientId = "408553945001-bqp41jloevqsq59b7tk0qlhuouqu4o5q.apps.googleusercontent.com";
+    options.ClientSecret = "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";
+});
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -65,9 +80,12 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
 
 app.Run();

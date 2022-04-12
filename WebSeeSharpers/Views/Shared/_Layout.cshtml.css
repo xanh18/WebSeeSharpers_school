@@ -39,6 +39,10 @@ button.accept-policy {
   line-height: inherit;
 }
 
+div.bg-color {
+    background-color: dimgrey;
+}
+
 .footer {
   position: absolute;
   bottom: 0;

@@ -1,0 +1,37 @@
+﻿@using WebSeeSharpers.Data
+@*@model IEnumerable<WebSeeSharpers.Models.Rating>
+
+
+
+    @foreach (var item in Model)
+    {
+<p> @item.Comment </br></p>
+    }
+*@
+
+
+@model int
+@inject WebSeeSharpersContext context
+
+@{
+    var ratings = context.Ratings.Where(x => x.MovieId == Model).ToArray();
+
+}
+    <div class="ratingcomment">
+    @foreach (var item in ratings)
+    {
+        if (item.ViewerName == null)
+        {
+           <h5>AnnoNiem</h5>
+        }
+        else
+        {
+           <h5>@item.ViewerName </h5>
+        }
+
+            <p> @item.Comment </p>
+    }
+    </div>
+
+
+

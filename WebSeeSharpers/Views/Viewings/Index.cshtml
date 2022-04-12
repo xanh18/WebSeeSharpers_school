@@ -26,6 +26,9 @@
                     <li class="list-group-item bg-black text-white">
                         <a asp-controller="SeatSelection" asp-action="Index" asp-route-viewingId="@item.Id" class="btn btn-info">@localizer["Order tickets"]</a>
                     </li>
+                    <li>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </li>
                 </ul>
 
             </div>

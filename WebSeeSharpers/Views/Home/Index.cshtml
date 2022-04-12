@@ -45,6 +45,7 @@
                         <li class="list-group-item bg-black text-white">@Html.DisplayFor(modelItem => item.DescriptionEn)</li>   
                     }
                     <li class="list-group-item bg-black text-white">@localizer["Release date"] @Html.DisplayFor(modelItem => item.BeginTime)</li>
+                     <a asp-action="Details" asp-controller="Movies" asp-route-id="@item.Id">FilmInformatie</a>
                 </ul>
             </div>
         }
