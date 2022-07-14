@@ -1,7 +1,7 @@
 # WebSeeSharpers_school
 A cinema application with the .net framework
 
-This is a school poject I created with 4 friends
+This is a school project I created with 4 other students
 
 The first half we created together and the latter half we have to complete individual.
 
