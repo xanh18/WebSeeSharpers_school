@@ -3,7 +3,7 @@ A cinema application with the .net framework
 
 This is a school project I created with 4 other students
 
-The first half we created together and the latter half we have to complete individual.
+The first half we created together and the latter half we had to complete individual.
 
 What have I learned 
 
