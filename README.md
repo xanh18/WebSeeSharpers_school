@@ -1,4 +1,6 @@
 # WebSeeSharpers_school
+# Watch on branch xanh4 to see my individual input
+
 A cinema application with the .net framework
 
 This is a school project I created with 4 other students
